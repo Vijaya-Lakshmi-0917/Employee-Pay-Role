@@ -1,90 +1,38 @@
 package spring.employee.employeepayrole.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
 public class User {
 
-    @NotEmpty(message = "Name is required")
-    @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Name must contain only alphabets and spaces")
+    @NotBlank(message = "Name is mandatory")
+    @Pattern(regexp = "^[A-Z][a-zA-Z\\s]{2,}$", message = "Name must start with a capital letter and be at least 3 characters long")
     private String name;
 
-    @NotEmpty(message = "Gender is required")
+    @NotBlank(message = "Gender is mandatory")
     private String gender;
 
-    @NotNull(message = "Start date is required")
-    @PastOrPresent(message = "Start date cannot be in the future")
+    @NotNull(message = "Start date is mandatory")
+    @JsonFormat(pattern = "dd MMM yyyy")
+    @PastOrPresent(message = "Start date must be a past or present date")
     private LocalDate startDate;
 
+    @NotBlank(message = "Note cannot be blank")
     private String note;
 
+    @NotBlank(message = "Profile pic is required")
     private String profilePic;
 
-    @NotEmpty(message = "Department is required")
+    @NotEmpty(message = "Department must not be empty")
     private List<String> department;
 
-    private Double salary;
-
-    // Getters and setters
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getProfilePic() {
-        return profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }
-
-    public List<String> getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(List<String> department) {
-        this.department = department;
-    }
-
-    public Double getSalary() {
-        return salary;
-    }
-
-    public void setSalary(Double salary) {
-        this.salary = salary;
-    }
+    @Min(value = 1000, message = "Salary must be at least 1000")
+    private long salary;
 }

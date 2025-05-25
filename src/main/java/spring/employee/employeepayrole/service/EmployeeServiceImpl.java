@@ -1,5 +1,6 @@
 package spring.employee.employeepayrole.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.employee.employeepayrole.dto.User;
@@ -9,6 +10,7 @@ import spring.employee.employeepayrole.repository.EmployeeRepository;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -17,17 +19,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee createEmployee(User user) {
-        Employee employee = new Employee();
-        employee.setName(user.getName());
-        employee.setGender(user.getGender());
-        employee.setStartDate(user.getStartDate());
-        employee.setNote(user.getNote());
-        employee.setProfilePic(user.getProfilePic());
-        employee.setDepartment(user.getDepartment());
-        employee.setSalary(user.getSalary());
+        log.info("Saving employee data: {}", user);
+        Employee employee = Employee.builder()
+                .name(user.getName())
+                .gender(user.getGender())
+                .startDate(user.getStartDate())
+                .note(user.getNote())
+                .profilePic(user.getProfilePic())
+                .department(user.getDepartment())
+                .salary(user.getSalary())
+                .build();
         return repository.save(employee);
     }
-
 
     @Override
     public List<Employee> getAllEmployees() {
@@ -43,6 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee updateEmployee(Long id, User user) {
         Employee existing = getEmployeeById(id);
+        log.info("Updating employee: {}", existing);
         existing.setName(user.getName());
         existing.setGender(user.getGender());
         existing.setStartDate(user.getStartDate());
@@ -56,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployee(Long id) {
         Employee existing = getEmployeeById(id);
+        log.info("Deleting employee with ID {}", id);
         repository.delete(existing);
     }
-
 }
