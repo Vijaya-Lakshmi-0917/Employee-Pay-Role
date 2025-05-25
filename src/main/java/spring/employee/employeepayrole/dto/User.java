@@ -1,19 +1,19 @@
 package spring.employee.employeepayrole.dto;
 
 public class User {
-
     private String name;
-    private double salary;
+    private Double salary;
 
     public User() {}
 
-    public User(String name, double salary) {
+    public User(String name, Double salary) {
         this.name = name;
         this.salary = salary;
     }
+
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public double getSalary() { return salary; }
-    public void setSalary(double salary) { this.salary = salary; }
+    public Double getSalary() { return salary; }
+    public void setSalary(Double salary) { this.salary = salary; }
 }
