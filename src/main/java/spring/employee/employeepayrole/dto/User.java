@@ -5,34 +5,37 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.*;
+import lombok.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
-    @NotBlank(message = "Name is mandatory")
-    @Pattern(regexp = "^[A-Z][a-zA-Z\\s]{2,}$", message = "Name must start with a capital letter and be at least 3 characters long")
+    @NotBlank(message = "Name is required")
     private String name;
 
-    @NotBlank(message = "Gender is mandatory")
+    @NotBlank(message = "Gender is required")
     private String gender;
 
-    @NotNull(message = "Start date is mandatory")
     @JsonFormat(pattern = "dd MMM yyyy")
-    @PastOrPresent(message = "Start date must be a past or present date")
+    @PastOrPresent(message = "Start date must be in the past or today")
     private LocalDate startDate;
 
-    @NotBlank(message = "Note cannot be blank")
+    @NotBlank(message = "Note is required")
     private String note;
 
-    @NotBlank(message = "Profile pic is required")
+    @NotBlank(message = "Profile picture is required")
     private String profilePic;
 
-    @NotEmpty(message = "Department must not be empty")
-    private List<String> department;
+    @NotBlank(message = "Department is required")
+    private String department;
 
-    @Min(value = 1000, message = "Salary must be at least 1000")
-    private long salary;
+    @Positive(message = "Salary must be positive")
+    private double salary;
 }

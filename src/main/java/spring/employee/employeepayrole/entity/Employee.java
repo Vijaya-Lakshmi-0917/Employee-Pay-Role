@@ -2,9 +2,7 @@ package spring.employee.employeepayrole.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Data
@@ -22,9 +20,6 @@ public class Employee {
     private LocalDate startDate;
     private String note;
     private String profilePic;
-
-    @ElementCollection
-    private List<String> department;
-
-    private long salary;
+    private String department;
+    private double salary;
 }

@@ -1,6 +1,5 @@
 package spring.employee.employeepayrole.service;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.employee.employeepayrole.dto.User;
@@ -11,7 +10,6 @@ import spring.employee.employeepayrole.repository.EmployeeRepository;
 import java.util.List;
 
 @Service
-@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
@@ -25,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .startDate(user.getStartDate())
                 .note(user.getNote())
                 .profilePic(user.getProfilePic())
-                .department(user.getDepartment())
+
                 .salary(user.getSalary())
                 .build();
         return repository.save(employee);
@@ -59,5 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void deleteEmployee(Long id) {
         Employee existing = getEmployeeById(id);
         repository.delete(existing);
+    }
+
+    @Override
+    public List<Employee> getEmployeesFromSales() {
+        return repository.findEmployeesInSalesDepartment();
     }
 }
