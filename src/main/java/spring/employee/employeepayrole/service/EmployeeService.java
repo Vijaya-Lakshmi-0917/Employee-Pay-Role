@@ -1,55 +1,44 @@
 package spring.employee.employeepayrole.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.employee.employeepayrole.dto.User;
 import spring.employee.employeepayrole.entity.Employee;
 import spring.employee.employeepayrole.repository.EmployeeRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository repository;
+    private final EmployeeRepository repo;
 
-    public User createEmployee(User dto) {
-        Employee emp = new Employee();
-        emp.setName(dto.getName());
-        emp.setSalary(dto.getSalary());
-        emp.setDepartment(null);
-
-        Employee saved = repository.save(emp);
-        return new User(saved.getName(), saved.getSalary());
+    public EmployeeService(EmployeeRepository repo) {
+        this.repo = repo;
     }
 
-    public List<User> getAllEmployees() {
-        return repository.findAll().stream()
-                .map(emp -> new User(emp.getName(), emp.getSalary()))
-                .collect(Collectors.toList());
+    public Employee createEmployee(User user) {
+        Employee employee = new Employee(user.getName(), user.getSalary(), user.getEmail(), user.getDepartment());
+        return repo.save(employee);
     }
 
-    public User getEmployeeById(Long id) {
-        return repository.findById(id)
-                .map(emp -> new User(emp.getName(), emp.getSalary()))
-                .orElse(null);
+    public List<Employee> getAllEmployees() {
+        return repo.findAll();
     }
 
-    public boolean updateEmployee(Long id, User dto) {
-        return repository.findById(id).map(emp -> {
-            emp.setName(dto.getName());
-            emp.setSalary(dto.getSalary());
-            repository.save(emp);
-            return true;
-        }).orElse(false);
+    public Employee getEmployeeById(Long id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
     }
 
-    public boolean deleteEmployee(Long id) {
-        return repository.findById(id).map(emp -> {
-            repository.delete(emp);
-            return true;
-        }).orElse(false);
+    public Employee updateEmployee(Long id, User user) {
+        Employee emp = repo.findById(id).orElseThrow(() -> new RuntimeException("Employee not found"));
+        emp.setName(user.getName());
+        emp.setSalary(user.getSalary());
+        emp.setEmail(user.getEmail());
+        emp.setDepartment(user.getDepartment());
+        return repo.save(emp);
+    }
+
+    public void deleteEmployee(Long id) {
+        repo.deleteById(id);
     }
 }

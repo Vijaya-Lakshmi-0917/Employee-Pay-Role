@@ -1,27 +1,22 @@
 package spring.employee.employeepayrole.dto;
 
+import jakarta.validation.constraints.*;
+import lombok.*;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
+
+    @NotBlank(message = "Name is required and cannot be blank")
+    @Pattern(regexp = "^[A-Z][a-zA-Z ]{2,}$", message = "Name must start with a capital letter and contain only letters and spaces")
     private String name;
-    private Double salary;
 
-    public User() {}
+    @Min(value = 1000, message = "Salary must be greater than 1000")
+    private double salary;
 
-    public User(String name, Double salary) {
-        this.name = name;
-        this.salary = salary;
-    }
+    @Email(message = "Invalid email format")
+    private String email;
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getSalary() {
-        return salary;
-    }
-    public void setSalary(Double salary) {
-        this.salary = salary;
-    }
+    private String department;
 }
