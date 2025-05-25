@@ -19,10 +19,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(User user) {
         Employee employee = new Employee();
         employee.setName(user.getName());
+        employee.setGender(user.getGender());
+        employee.setStartDate(user.getStartDate());
+        employee.setNote(user.getNote());
+        employee.setProfilePic(user.getProfilePic());
         employee.setDepartment(user.getDepartment());
         employee.setSalary(user.getSalary());
         return repository.save(employee);
     }
+
 
     @Override
     public List<Employee> getAllEmployees() {
@@ -39,6 +44,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee updateEmployee(Long id, User user) {
         Employee existing = getEmployeeById(id);
         existing.setName(user.getName());
+        existing.setGender(user.getGender());
+        existing.setStartDate(user.getStartDate());
+        existing.setNote(user.getNote());
+        existing.setProfilePic(user.getProfilePic());
         existing.setDepartment(user.getDepartment());
         existing.setSalary(user.getSalary());
         return repository.save(existing);
@@ -49,4 +58,5 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee existing = getEmployeeById(id);
         repository.delete(existing);
     }
+
 }
