@@ -1,12 +1,11 @@
 package spring.employee.employeepayrole.entity;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Employee {
 
     @Id
@@ -14,14 +13,31 @@ public class Employee {
     private Long id;
 
     private String name;
-    private double salary;
-    private String email;
     private String department;
+    private Double salary;
 
-    public Employee(String name, double salary, String email, String department) {
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
         this.name = name;
-        this.salary = salary;
-        this.email = email;
+    }
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
         this.department = department;
+    }
+    public Double getSalary() {
+        return salary;
+    }
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 }
