@@ -1,5 +1,6 @@
 package spring.employee.employeepayrole.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.employee.employeepayrole.dto.User;
@@ -10,6 +11,7 @@ import spring.employee.employeepayrole.repository.EmployeeRepository;
 import java.util.List;
 
 @Service
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
