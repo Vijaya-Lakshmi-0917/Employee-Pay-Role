@@ -1,39 +1,33 @@
 package spring.employee.employeepayrole.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import spring.employee.employeepayrole.dto.User;
 import spring.employee.employeepayrole.entity.Employee;
 import spring.employee.employeepayrole.repository.EmployeeRepository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EmployeeService {
 
-    private final EmployeeRepository repository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
-    public EmployeeService(EmployeeRepository repository) {
-        this.repository = repository;
+    public Employee create(User dto) {
+        Employee emp = new Employee();
+        emp.setName(dto.getName());
+        return employeeRepository.save(emp);
     }
 
-    public List<Employee> getAllEmployees() {
-        return repository.findAll();
-    }
-
-    public Optional<Employee> getEmployeeById(Long id) {
-        return repository.findById(id);
-    }
-
-    public Employee addEmployee(Employee employee) {
-        return repository.save(employee);
-    }
-
-    public Employee updateEmployee(Long id, Employee employee) {
-        employee.setId(id);
-        return repository.save(employee);
-    }
-
-    public void deleteEmployee(Long id) {
-        repository.deleteById(id);
+    public Employee update(Long id, User dto) {
+        Optional<Employee> existing = employeeRepository.findById(id);
+        if (existing.isPresent()) {
+            Employee emp = existing.get();
+            emp.setName(dto.getName());
+            return employeeRepository.save(emp);
+        } else {
+            throw new RuntimeException("Employee not found with id " + id);
+        }
     }
 }
