@@ -1,25 +1,19 @@
 package spring.employee.employeepayrole.dto;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-
 public class User {
 
-    @NotEmpty(message = "Name is required and cannot be empty")
-    @Pattern(regexp = "^[A-Za-z ]+$", message = "Name must contain only alphabets and spaces")
     private String name;
+    private double salary;
 
     public User() {}
 
-    public User(String name) {
+    public User(String name, double salary) {
         this.name = name;
+        this.salary = salary;
     }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public double getSalary() { return salary; }
+    public void setSalary(double salary) { this.salary = salary; }
 }
